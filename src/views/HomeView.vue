@@ -1,15 +1,17 @@
 <script setup>
-import PartiesVotes from '../components/PartiesVotes.vue'
+import HeaderOptions from '../components/HeaderOptions.vue'
+import Layout from '../components/Layout.vue'
 </script>
 
 <template>
   <main>
-    <PartiesVotes />
+    <HeaderOptions />
+    <Layout />
   </main>
 </template>
 
 <style scoped>
 main {
-  max-width: 50vw;
+  max-width: 70vw;
 }
 </style>
