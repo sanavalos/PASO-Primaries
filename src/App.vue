@@ -1,12 +1,7 @@
-<script setup>
-import HomeView from './views/HomeView.vue'
-</script>
+<script setup></script>
 
 <template>
-  <header>
-    <h1>PASO Primaries - ARGENTINA</h1>
-  </header>
-  <HomeView />
+  <RouterView />
 </template>
 
 <style scoped>
