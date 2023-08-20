@@ -85,6 +85,13 @@ main {
   align-items: center;
   color: #f8f8f8;
   height: 70vh;
+  @media screen {
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+  }
 }
 
 ul {
@@ -96,6 +103,12 @@ ul {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   height: 100%;
+    @media screen {
+    @media (max-width: 768px) {
+     width: 100%;
+    }
+  }
+
 }
 .card .title {
   text-align: center;
@@ -145,6 +158,11 @@ ul {
 .number {
   font-size: 3rem;
   font-weight: 800;
+  @media screen {
+    @media (max-width: 768px) {
+     font-size: 2rem;
+    }
+  }
 }
 
 .left {
@@ -161,5 +179,10 @@ ul {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  @media screen {
+    @media (max-width: 768px) {
+     flex-direction: column;
+    }
+  }
 }
 </style>

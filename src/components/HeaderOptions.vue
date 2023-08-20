@@ -24,6 +24,12 @@ nav {
   justify-content: space-between;
   align-items: center;
   border-radius: 8px;
+  @media screen {
+    @media (max-width: 768px) {
+     flex-direction: column;
+     margin-bottom: 1rem;
+    }
+  }
 }
 nav ul {
   display: flex;
