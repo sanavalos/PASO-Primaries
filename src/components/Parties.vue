@@ -6,6 +6,7 @@ const partiesData = ref([])
 const currentParty = ref({})
 const currentCandidates = ref([])
 const updateDate = ref('')
+const totalLists = ref(0)
 
 const selectedParty = (party) => {
   currentParty.value = party
@@ -20,6 +21,9 @@ function setPartiesData() {
     .then((response) => {
       partiesData.value = response.data.partidos
       updateDate.value = response.data.date
+      totalLists.value = response.data.partidos.reduce((acc, party) => {
+        return acc + party.listas.length
+      }, 0)
     })
     .catch((error) => {
       console.log(error)
@@ -34,16 +38,16 @@ onMounted(() => {
   <main>
     <div class="card left">
       <span class="number">{{ partiesData.length }}</span>
-      Total parties
+      Total political parties
     </div>
     <div class="card right">
       <div>
-        <span class="number"> 100 </span>
+        <span class="number"> {{ totalLists }} </span>
         Total lists
       </div>
       <div>
-        <span class="number"> 200 </span>
-        Total candidates
+        <span class="number"> {{ totalLists }} </span>
+        Total president candidates
       </div>
     </div>
     <div class="card">
@@ -63,7 +67,7 @@ onMounted(() => {
       <p class="title">{{ currentParty.name }}</p>
       <ul>
         <li v-for="group in currentCandidates">
-          <span> {{ group.candidatos[0] }} </span> ({{ group.votos }})
+          <span> {{ group.candidatos[0] }} </span> ({{ group.votos?.toLocaleString("en-US") }})
         </li>
       </ul>
     </div>
@@ -74,7 +78,7 @@ onMounted(() => {
 main {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 0.5fr 2fr;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
