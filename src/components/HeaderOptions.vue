@@ -1,13 +1,20 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
-  <nav>
-    <ul>
-      <li>Votation results</li>
-      <li>Political parties</li>
-    </ul>
-    <p>August 14th, 2023</p>
-  </nav>
+  <div>
+    <header>
+      <h1>PASO Primaries - ARGENTINA</h1>
+    </header>
+    <nav>
+      <ul>
+        <RouterLink to="/votes"><li>Votation results</li></RouterLink>
+        <RouterLink to="/parties"><li>Political parties</li></RouterLink>
+      </ul>
+      <p>August 14th, 2023</p>
+    </nav>
+  </div>
 </template>
 
 <style scoped>
@@ -44,5 +51,13 @@ nav p {
   letter-spacing: 2px;
   background-color: #8c8c8c;
   color: #000;
+}
+a {
+  text-decoration: none;
+  color: #f8f8f8;
+}
+.active {
+  color: #ff9900;
+  font-weight: 800;
 }
 </style>
