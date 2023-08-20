@@ -23,7 +23,7 @@ function setVotesData() {
         voteTypes.value.push({
           name: type.name,
           translation: type.translation,
-          quantity: response.data[type.name]
+          quantity: response.data[type.name]?.toLocaleString("en-US")
         })
       })
     })
@@ -40,7 +40,7 @@ onMounted(() => {
 <template>
   <main>
     <div class="card left">
-      <span class="number">{{ votesData.totalVotos }}</span>
+      <span class="number">{{ votesData.totalVotos?.toLocaleString("en-US") }}</span>
       Total votes
     </div>
     <div class="card right">
@@ -49,7 +49,7 @@ onMounted(() => {
         Participation
       </div>
       <div>
-        <span class="number"> {{ votesData.valid }} </span>
+        <span class="number"> {{ votesData.valid?.toLocaleString("en-US") }} </span>
         Valid votes
       </div>
     </div>
@@ -79,7 +79,7 @@ onMounted(() => {
 main {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 0.5fr 2fr;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
@@ -160,7 +160,7 @@ ul {
   font-weight: 800;
   @media screen {
     @media (max-width: 768px) {
-     font-size: 2rem;
+     font-size: 1.5rem;
     }
   }
 }
@@ -176,13 +176,9 @@ ul {
 .right {
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  @media screen {
-    @media (max-width: 768px) {
-     flex-direction: column;
-    }
-  }
+  padding: 0;
 }
 </style>
