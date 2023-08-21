@@ -26,8 +26,8 @@ nav {
   border-radius: 8px;
   @media screen {
     @media (max-width: 768px) {
-     flex-direction: column;
-     margin-bottom: 1rem;
+      flex-direction: column;
+      margin-bottom: 1rem;
     }
   }
 }

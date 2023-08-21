@@ -67,7 +67,7 @@ onMounted(() => {
       <p class="title">{{ currentParty.name }}</p>
       <ul>
         <li v-for="group in currentCandidates">
-          <span> {{ group.candidatos[0] }} </span> ({{ group.votos?.toLocaleString("en-US") }})
+          <span> {{ group.candidatos[0] }} </span> ({{ group.votos?.toLocaleString('en-US') }})
         </li>
       </ul>
     </div>
@@ -104,7 +104,7 @@ ul {
   height: 100%;
   @media screen {
     @media (max-width: 768px) {
-     width: 100%;
+      width: 100%;
     }
   }
 }
@@ -152,7 +152,7 @@ ul {
   font-weight: 800;
   @media screen {
     @media (max-width: 768px) {
-     font-size: 2rem;
+      font-size: 2rem;
     }
   }
 }
@@ -173,7 +173,7 @@ ul {
   align-items: center;
   @media screen {
     @media (max-width: 768px) {
-     flex-direction: column;
+      flex-direction: column;
     }
   }
 }

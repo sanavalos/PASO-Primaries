@@ -23,7 +23,7 @@ function setVotesData() {
         voteTypes.value.push({
           name: type.name,
           translation: type.translation,
-          quantity: response.data[type.name]?.toLocaleString("en-US")
+          quantity: response.data[type.name]?.toLocaleString('en-US')
         })
       })
     })
@@ -40,7 +40,7 @@ onMounted(() => {
 <template>
   <main>
     <div class="card left">
-      <span class="number">{{ votesData.totalVotos?.toLocaleString("en-US") }}</span>
+      <span class="number">{{ votesData.totalVotos?.toLocaleString('en-US') }}</span>
       Total votes
     </div>
     <div class="card right">
@@ -49,7 +49,7 @@ onMounted(() => {
         Participation
       </div>
       <div>
-        <span class="number"> {{ votesData.valid?.toLocaleString("en-US") }} </span>
+        <span class="number"> {{ votesData.valid?.toLocaleString('en-US') }} </span>
         Valid votes
       </div>
     </div>
@@ -103,12 +103,11 @@ ul {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   height: 100%;
-    @media screen {
+  @media screen {
     @media (max-width: 768px) {
-     width: 100%;
+      width: 100%;
     }
   }
-
 }
 .card .title {
   text-align: center;
@@ -160,7 +159,7 @@ ul {
   font-weight: 800;
   @media screen {
     @media (max-width: 768px) {
-     font-size: 1.5rem;
+      font-size: 1.5rem;
     }
   }
 }
