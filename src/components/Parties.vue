@@ -50,16 +50,18 @@ onMounted(() => {
         Total president candidates
       </div>
     </div>
-    <div class="card">
+    <div class="card parties">
       <p class="title">Political parties</p>
       <hr />
-      <div
-        class="party"
-        v-for="primary in partiesData"
-        :key="primary.code"
-        @click="selectedParty(primary)"
-      >
-        <p>{{ primary.name }}</p>
+      <div class="scroll">
+        <p
+          class="party"
+          v-for="primary in partiesData"
+          :key="primary.code"
+          @click="selectedParty(primary)"
+        >
+          {{ primary.name }}
+        </p>
       </div>
     </div>
     <div class="card info">
@@ -108,18 +110,38 @@ ul {
     }
   }
 }
+
 .card .title {
   text-align: center;
 }
-
+.card .scroll {
+  height: 90%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #8C8C8C;
+    border-radius: 20px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #3a3a3a;
+  }
+}
 .empty {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 800;
   color: #000;
 }
-
-.card .party {
+.parties {
+  height: 55vh;
+}
+.party {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -130,6 +152,9 @@ ul {
   background-color: #f8f8f8;
   color: #000;
   cursor: pointer;
+}
+.info {
+  height: 100%;
 }
 .info ul {
   display: flex;
@@ -169,7 +194,7 @@ ul {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   @media screen {
     @media (max-width: 768px) {
