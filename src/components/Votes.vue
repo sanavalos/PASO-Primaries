@@ -178,6 +178,10 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  @media screen {
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+  }
 }
 </style>
