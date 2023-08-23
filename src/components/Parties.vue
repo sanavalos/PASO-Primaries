@@ -80,7 +80,7 @@ onMounted(() => {
 main {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 0.5fr 2fr;
+  grid-auto-rows: max-content;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
@@ -115,7 +115,7 @@ ul {
   text-align: center;
 }
 .card .scroll {
-  height: 90%;
+  height: 50vh;
   overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {
@@ -139,7 +139,7 @@ ul {
   color: #000;
 }
 .parties {
-  height: 55vh;
+  height: fit-content;
 }
 .party {
   display: flex;
