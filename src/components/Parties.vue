@@ -4,22 +4,27 @@ import { getPrimariesData } from '../services/services.js'
 
 const partiesData = ref([])
 const currentParty = ref({})
-const currentCandidates = ref([])
 const updateDate = ref('')
 const totalLists = ref(0)
 
 const selectedParty = (party) => {
   currentParty.value = party
+  console.log('party selected', party)
 }
-
-watch(currentParty, (newValue, oldValue) => {
-  currentCandidates.value = newValue.listas
-})
 
 function setPartiesData() {
   getPrimariesData()
     .then((response) => {
-      partiesData.value = response.data.partidos
+      const partiesDataCopy = response.data.partidos
+      const colorsDataCopy = JSON.parse(JSON.stringify(props.colorsData))
+      partiesDataCopy.forEach((party) => {
+        for (const [key, value] of Object.entries(colorsDataCopy)) {
+          if (party.codLogo === key) {
+            party.color = value
+          }
+        }
+      })
+      partiesData.value = partiesDataCopy
       updateDate.value = response.data.date
       totalLists.value = response.data.partidos.reduce((acc, party) => {
         return acc + party.listas.length
@@ -31,6 +36,10 @@ function setPartiesData() {
 }
 onMounted(() => {
   setPartiesData()
+})
+
+const props = defineProps({
+  colorsData: Object
 })
 </script>
 
@@ -58,6 +67,7 @@ onMounted(() => {
           class="party"
           v-for="primary in partiesData"
           :key="primary.code"
+          :style="{ backgroundColor: primary.color }"
           @click="selectedParty(primary)"
         >
           {{ primary.name }}
@@ -66,9 +76,9 @@ onMounted(() => {
     </div>
     <div class="card info">
       <p v-if="!currentParty.name" class="title empty">Select a party</p>
-      <p class="title">{{ currentParty.name }}</p>
+      <p class="title-current" :style="{ color: currentParty.color }">{{ currentParty.name }}</p>
       <ul>
-        <li v-for="group in currentCandidates">
+        <li v-for="group in currentParty.listas">
           <span> {{ group.candidatos[0] }} </span> ({{ group.votos?.toLocaleString('en-US') }})
         </li>
       </ul>
@@ -94,7 +104,10 @@ main {
     }
   }
 }
-
+hr {
+  border: 1px solid #f8f8f8;
+  margin: 1rem 0;
+}
 ul {
   padding: 0;
 }
@@ -114,6 +127,13 @@ ul {
 .card .title {
   text-align: center;
 }
+.title-current {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 1rem 0;
+  text-shadow: 0 0 3px #000;
+}
 .card .scroll {
   height: 50vh;
   overflow-y: scroll;
@@ -125,7 +145,7 @@ ul {
     background: none;
   }
   &::-webkit-scrollbar-thumb {
-    background: #8C8C8C;
+    background: #8c8c8c;
     border-radius: 20px;
   }
   &::-webkit-scrollbar-thumb:hover {
@@ -151,6 +171,7 @@ ul {
   margin: 1rem 0;
   background-color: #f8f8f8;
   color: #000;
+  font-weight: 600;
   cursor: pointer;
 }
 .info {

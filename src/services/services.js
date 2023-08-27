@@ -1,9 +1,17 @@
 import axios from 'axios'
 
-const apiClient = axios.create({
+const apiClientBackend = axios.create({
   baseURL: import.meta.env.VITE_API_PRIMARIES
 })
 
+const apiClientColors = axios.create({
+  baseURL: import.meta.env.VITE_API_COLORS
+})
+
 export const getPrimariesData = () => {
-  return apiClient.get('')
+  return apiClientBackend.get('')
+}
+
+export const getColorsData = () => {
+  return apiClientColors.get('')
 }

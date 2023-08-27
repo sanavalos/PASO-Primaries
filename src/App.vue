@@ -1,7 +1,26 @@
-<script setup></script>
+<script setup>
+import { getColorsData } from './services/services.js'
+import { onMounted, ref } from 'vue'
+
+const colorsData = ref([])
+
+function setColorsData() {
+  getColorsData()
+    .then((response) => {
+      colorsData.value = response.data.elecciones[0].partidos
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+onMounted(() => {
+  setColorsData()
+})
+</script>
 
 <template>
-  <RouterView />
+  <RouterView :colorsData="colorsData" />
 </template>
 
 <style scoped>
