@@ -9,7 +9,6 @@ const totalLists = ref(0)
 
 const selectedParty = (party) => {
   currentParty.value = party
-  console.log('party selected', party)
 }
 
 function setPartiesData() {
