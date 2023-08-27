@@ -57,12 +57,12 @@ onMounted(() => {
       <p class="title">Votes</p>
       <hr />
       <div class="vote-section">
-        <LeftArrow />
+        <LeftArrow @click="voteTypes.unshift(voteTypes.pop())" />
         <div class="carrusel" v-if="voteTypes.length > 0">
           <p class="quantity">{{ voteTypes[0].quantity }}</p>
           <p>{{ voteTypes[0].translation }}</p>
         </div>
-        <RightArrow />
+        <RightArrow @click="voteTypes.push(voteTypes.shift())" />
       </div>
     </div>
     <div class="card info">
@@ -93,7 +93,10 @@ main {
     }
   }
 }
-
+hr {
+  border: 1px solid #f8f8f8;
+  margin: 1rem 0;
+}
 ul {
   padding: 0;
 }
@@ -141,18 +144,12 @@ ul {
   align-items: center;
   border-radius: 8px;
   color: #000;
-  height: 90%;
-  display: flex;
+  height: 80%;
 }
 .info ul li {
   align-items: center;
   width: 100%;
   list-style: none;
-}
-.info span {
-  font-weight: 800;
-  font-size: 20px;
-  text-align: center;
 }
 .number {
   font-size: 3rem;
