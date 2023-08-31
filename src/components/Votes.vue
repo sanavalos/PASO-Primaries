@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { getPrimariesData } from '../services/services.js'
 import LeftArrow from '../components/LeftArrow.vue'
 import RightArrow from '../components/RightArrow.vue'
+import Chart from 'chart.js/auto'
 
 const votesData = ref([])
 const partiesData = ref([])
@@ -18,7 +19,16 @@ function setVotesData() {
   getPrimariesData()
     .then((response) => {
       votesData.value = response.data
-      partiesData.value = response.data.partidos
+      const partiesDataCopy = response.data.partidos
+      const colorsDataCopy = JSON.parse(JSON.stringify(props.colorsData))
+      partiesDataCopy.forEach((party) => {
+        for (const [key, value] of Object.entries(colorsDataCopy)) {
+          if (party.codLogo === key) {
+            party.color = value
+          }
+        }
+      })
+      partiesData.value = partiesDataCopy
       types.value.forEach((type) => {
         voteTypes.value.push({
           name: type.name,
@@ -32,8 +42,70 @@ function setVotesData() {
     })
 }
 
+const data = {
+  labels: [],
+  datasets: [
+    {
+      label: 'My First Dataset',
+      data: [],
+      backgroundColor: [],
+      hoverOffset: 4
+    }
+  ]
+}
+
+const isMobile = window.innerWidth < 768
+
+const config = {
+  type: 'pie',
+  data: data,
+  options: {
+    layout: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      }
+    },
+    plugins: {
+      legend: {
+        position: isMobile ? 'bottom' : 'right',
+        labels: {
+          font: {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+
 onMounted(() => {
   setVotesData()
+})
+
+const props = defineProps({
+  colorsData: Object
+})
+
+watch(partiesData, () => {
+  const chartLabels = []
+  const chartData = []
+  const chartColors = []
+  partiesData.value.forEach((element, index) => {
+    chartLabels.push(element.name)
+    chartData.push(element.votos)
+    chartColors.push(element.color)
+  })
+  data.labels = chartLabels
+  data.datasets[0].backgroundColor = chartColors
+  data.datasets[0].data = chartData
+  const chartId = 'my-chart'
+  const canvas = document.getElementById(chartId)
+  if (canvas) {
+    const myChart = new Chart(canvas, config)
+  }
 })
 </script>
 
@@ -66,11 +138,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="card info">
-      <ul>
-        <li v-for="primary in partiesData" :key="primary.code">
-          {{ primary.name }}
-        </li>
-      </ul>
+      <canvas id="my-chart"></canvas>
     </div>
   </main>
 </template>
@@ -146,7 +214,10 @@ ul {
   color: #000;
   height: 80%;
 }
-.info ul li {
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
   list-style: none;
@@ -178,6 +249,14 @@ ul {
   @media screen {
     @media (max-width: 768px) {
       padding: 0;
+    }
+  }
+}
+
+#my-chart {
+  @media screen {
+    @media (max-width: 768px) {
+      height: fit-content;
     }
   }
 }

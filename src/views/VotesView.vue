@@ -1,12 +1,16 @@
 <script setup>
 import HeaderOptions from '../components/HeaderOptions.vue'
 import Votes from '../components/Votes.vue'
+
+const props = defineProps({
+  colorsData: Object
+})
 </script>
 
 <template>
   <main>
     <HeaderOptions />
-    <Votes />
+    <Votes :colorsData="props.colorsData" />
   </main>
 </template>
 
