@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { getPrimariesData } from '../services/services.js'
+import Chart from 'chart.js/auto'
 
 const partiesData = ref([])
 const currentParty = ref({})
@@ -40,6 +41,53 @@ onMounted(() => {
 const props = defineProps({
   colorsData: Object
 })
+
+const data = {
+  labels: [],
+  datasets: [
+    {
+      label: 'Valid votes',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: []
+    }
+  ]
+}
+
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+}
+
+let activeChart = null
+
+watch(currentParty, () => {
+  if (activeChart) {
+    activeChart.destroy()
+  }
+  const chartLabels = []
+  const chartData = []
+  const chartColors = [currentParty.value.color]
+  currentParty.value.listas.forEach((element) => {
+    chartLabels.push(element.candidatos[0])
+    chartData.push(element.votos)
+  })
+  data.labels = chartLabels
+  data.datasets[0].data = chartData
+  data.datasets[0].backgroundColor = chartColors
+  const chartId = 'chart-' + currentParty.value.id
+  const canvas = document.getElementById(chartId)
+  if (canvas) {
+    activeChart = new Chart(canvas, config)
+  }
+})
 </script>
 
 <template>
@@ -66,7 +114,7 @@ const props = defineProps({
           class="party"
           v-for="primary in partiesData"
           :key="primary.code"
-          :style="{ backgroundColor: primary.color }"
+          :style="{ border: `solid 5px ${primary.color}` }"
           @click="selectedParty(primary)"
         >
           {{ primary.name }}
@@ -75,12 +123,10 @@ const props = defineProps({
     </div>
     <div class="card info">
       <p v-if="!currentParty.name" class="title empty">Select a party</p>
-      <p class="title-current" :style="{ color: currentParty.color }">{{ currentParty.name }}</p>
-      <ul>
-        <li v-for="group in currentParty.listas">
-          <span> {{ group.candidatos[0] }} </span> ({{ group.votos?.toLocaleString('en-US') }})
-        </li>
-      </ul>
+      <p class="title-current">{{ currentParty.name }}</p>
+      <div v-if="currentParty">
+        <canvas :id="'chart-' + currentParty.id"></canvas>
+      </div>
     </div>
   </main>
 </template>
@@ -131,7 +177,7 @@ ul {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 1rem 0;
-  text-shadow: 0 0 3px #000;
+  color: black;
 }
 .card .scroll {
   height: 50vh;
