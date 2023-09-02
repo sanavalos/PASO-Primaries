@@ -46,7 +46,7 @@ const data = {
   labels: [],
   datasets: [
     {
-      label: 'My First Dataset',
+      label: 'Valid votes',
       data: [],
       backgroundColor: [],
       hoverOffset: 4
@@ -60,6 +60,7 @@ const config = {
   type: 'pie',
   data: data,
   options: {
+    maintainAspectRatio: isMobile ? true : false,
     layout: {
       padding: {
         left: 0,
