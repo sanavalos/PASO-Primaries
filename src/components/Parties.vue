@@ -117,6 +117,7 @@ watch(currentParty, () => {
           :style="{ border: `solid 5px ${primary.color}` }"
           @click="selectedParty(primary)"
         >
+        <img v-bind:src="'/src/assets/logos/' + primary.codLogo + '.png'" alt="logo" />
           {{ primary.name }}
         </p>
       </div>
@@ -208,13 +209,13 @@ ul {
 }
 .party {
   display: flex;
+  gap: 1rem;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
-  background-color: #f8f8f8;
+  background-color: #FFFFFF;
   color: #000;
   font-weight: 600;
   cursor: pointer;
