@@ -117,7 +117,7 @@ watch(currentParty, () => {
           :style="{ border: `solid 5px ${primary.color}` }"
           @click="selectedParty(primary)"
         >
-          <img v-bind:src="'/src/assets/logos/' + primary.codLogo + '.png'" alt="logo" />
+          <img v-bind:src="'/logos/' + primary.codLogo + '.png'" alt="logo" />
           {{ primary.name }}
         </p>
       </div>
