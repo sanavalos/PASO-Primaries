@@ -103,7 +103,7 @@ watch(currentParty, () => {
       </div>
       <div>
         <span class="number"> {{ totalLists }} </span>
-        Total president candidates
+        Total presidential candidates
       </div>
     </div>
     <div class="card parties">
@@ -117,13 +117,16 @@ watch(currentParty, () => {
           :style="{ border: `solid 5px ${primary.color}` }"
           @click="selectedParty(primary)"
         >
-        <img v-bind:src="'/src/assets/logos/' + primary.codLogo + '.png'" alt="logo" />
+          <img v-bind:src="'/src/assets/logos/' + primary.codLogo + '.png'" alt="logo" />
           {{ primary.name }}
         </p>
       </div>
     </div>
     <div class="card info">
-      <p v-if="!currentParty.name" class="title empty">Select a party</p>
+      <article v-if="!currentParty.name" class="title empty">
+        <h2>Choose a Party</h2>
+        <p>Select a party to see presidential candidates</p>
+      </article>
       <p class="title-current">{{ currentParty.name }}</p>
       <div v-if="currentParty">
         <canvas :id="'chart-' + currentParty.id"></canvas>
@@ -172,6 +175,7 @@ ul {
 
 .card .title {
   text-align: center;
+  text-transform: capitalize;
 }
 .title-current {
   text-align: center;
@@ -199,9 +203,20 @@ ul {
   }
 }
 .empty {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.empty h2 {
   font-size: 1.5rem;
   font-weight: 800;
+  color: #000;
+}
+.empty p {
+  font-size: 1rem;
+  font-weight: 500;
   color: #000;
 }
 .parties {
@@ -213,9 +228,9 @@ ul {
   flex-direction: row;
   align-items: center;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   margin: 1rem 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #000;
   font-weight: 600;
   cursor: pointer;
